@@ -33,6 +33,8 @@ const isBlue = equals("blue");
 const isOrange = equals("orange");
 
 const isGreatherThen = curry((goal, target) => target >= goal);
+const isGreatherThenThree = isGreatherThen(3);
+const isGreatherThenTwo = isGreatherThen(2);
 const isEqual = curry((a, b) => a === b);
 const isEqualOne = isEqual(1);
 const isEqualTwo = isEqual(2);
@@ -48,7 +50,10 @@ const getSize = (arr) => arr.size;
 
 const getColorCountByCondition = (Condition) =>
   compose(getLength, filter(Condition), objToArr);
-
+const getGreenColorCount = getColorCountByCondition(isGreen);
+const getRedColorCount = getColorCountByCondition(isRed);
+const getBlueColorCount = getColorCountByCondition(isBlue);
+const getOrangeColorCount = getColorCountByCondition(isOrange);
 
 // 1. Красная звезда, зеленый квадрат, все остальные белые.
 export const validateFieldN1 = ({ star, square, triangle, circle }) =>
@@ -56,9 +61,6 @@ export const validateFieldN1 = ({ star, square, triangle, circle }) =>
 
 // 2. Как минимум две фигуры зеленые.
 export const validateFieldN2 = (props) => {
-  const getGreenColorCount = getColorCountByCondition(isGreen);
-  const isGreatherThenTwo = isGreatherThen(2);
-
   const isGreenColorCountGreatherTwo = compose(
     isGreatherThenTwo,
     getGreenColorCount
@@ -69,10 +71,7 @@ export const validateFieldN2 = (props) => {
 
 // 3. Количество красных фигур равно кол-ву синих.
 export const validateFieldN3 = (props) => {
-  const getGreenColorCount = getColorCountByCondition(isRed);
-  const getBlueColorCount = getColorCountByCondition(isBlue);
-
-  return isEqual(getGreenColorCount(props), getBlueColorCount(props));
+  return isEqual(getRedColorCount(props), getBlueColorCount(props));
 };
 
 // 4. Синий круг, красная звезда, оранжевый квадрат треугольник любого цвета
@@ -81,8 +80,6 @@ export const validateFieldN4 = ({ star, square, triangle, circle }) =>
 
 // 5. Три фигуры одного любого цвета кроме белого (четыре фигуры одного цвета – это тоже true).
 export const validateFieldN5 = (props) => {
-  const isGreatherThenThree = isGreatherThen(3);
-
   const getUniqColourfulCount = compose(
     getSize,
     ArrToSet,
@@ -107,9 +104,6 @@ export const validateFieldN5 = (props) => {
 
 // 6. Ровно две зеленые фигуры (одна из зелёных – это треугольник), плюс одна красная. Четвёртая оставшаяся любого доступного цвета, но не нарушающая первые два условия
 export const validateFieldN6 = (props) => {
-  const getGreenColorCount = getColorCountByCondition(isGreen);
-  const getRedColorCount = getColorCountByCondition(isRed);
-
   const isGreenColorCountIsEqualTwo = compose(isEqualTwo, getGreenColorCount);
   const isRedColorCountIsEqualOne = compose(isEqualOne, getRedColorCount);
 
@@ -123,7 +117,6 @@ export const validateFieldN6 = (props) => {
 
 // 7. Все фигуры оранжевые.
 export const validateFieldN7 = (props) => {
-  const getOrangeColorCount = getColorCountByCondition(isOrange);
   const isOrangeColorCountIsEqualFour = compose(
     isEqualFour,
     getOrangeColorCount
@@ -135,13 +128,12 @@ export const validateFieldN7 = (props) => {
 // 8. Не красная и не белая звезда, остальные – любого цвета.
 export const validateFieldN8 = ({ star }) => {
   const isStarNotRedandWhite = allPass([isNotRed, isNotWhite]);
-  
+
   return isStarNotRedandWhite(star);
 };
 
 // 9. Все фигуры зеленые.
 export const validateFieldN9 = (props) => {
-  const getGreenColorCount = getColorCountByCondition(isGreen);
   const isOrangeColorCountIsEqualFour = compose(
     isEqualFour,
     getGreenColorCount
