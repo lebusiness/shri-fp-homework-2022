@@ -122,19 +122,19 @@ export const validateFieldN7 = (props) => {
 
 // 8. Не красная и не белая звезда, остальные – любого цвета.
 export const validateFieldN8 = ({ star }) => {
-  const isStarNotRedandWhite = allPass([isNotRed, isNotWhite]);
+  const isStarNotRedAndWhite = allPass([isNotRed, isNotWhite]);
 
-  return isStarNotRedandWhite(star);
+  return isStarNotRedAndWhite(star);
 };
 
 // 9. Все фигуры зеленые.
 export const validateFieldN9 = (props) => {
-  const isOrangeColorCountIsEqualFour = compose(
+  const isGreenColorCountIsEqualFour = compose(
     isEqualFour,
     getGreenColorCount
   );
 
-  return isOrangeColorCountIsEqualFour(props);
+  return isGreenColorCountIsEqualFour(props);
 };
 
 // 10. Треугольник и квадрат одного цвета (не белого), остальные – любого цвета
