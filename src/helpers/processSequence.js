@@ -81,6 +81,7 @@ const processSequence = async ({
   handleError,
 }) => {
   writeLog(value);
+
   const proxyWriteLog = proxyLog(writeLog);
 
   const isPositiveValidLengthValue = allPass([

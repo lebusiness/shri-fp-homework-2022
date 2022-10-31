@@ -15,7 +15,6 @@
 
 import {
   allPass,
-  anyPass,
   complement,
   compose,
   curry,
@@ -42,12 +41,16 @@ const isEqualTwo = isEqual(2);
 const isEqualFour = isEqual(4);
 
 // Трансформирующие функции
-const ArrToSet = (arr) => new Set(arr);
 const objToArr = (obj) => Object.values(obj);
-
+const arrToCountObj = (arr, hash = {}) => {
+  for(let i of arr) {
+    hash[i] = (hash[i] ?? 0) + 1
+  }
+  return hash;
+}
 // Гетеры
 const getLength = (arr) => arr.length;
-const getSize = (arr) => arr.size;
+const getMaxValueFromObj = (obj) => Math.max(...Object.values(obj));
 
 const getColorCountByCondition = (Condition) =>
   compose(getLength, filter(Condition), objToArr);
@@ -82,26 +85,15 @@ export const validateFieldN4 = ({ star, square, triangle, circle }) =>
 
 // 5. Три фигуры одного любого цвета кроме белого (четыре фигуры одного цвета – это тоже true).
 export const validateFieldN5 = (props) => {
-  // очень специфичные гетеры и предикаты, выносить в модуль не стал
-  const getUniqColourfulCount = compose(
-    getSize,
-    ArrToSet,
+
+  const getUniqColorCount = compose(
+    getMaxValueFromObj,
+    arrToCountObj,
     filter(isNotWhite),
-    objToArr
+    objToArr,
   );
-  const getUniqColorCount = compose(getSize, ArrToSet, objToArr);
-
-  const isUniqColourfulCountGreatherThree = compose(
-    isGreatherThenThree,
-    getUniqColourfulCount
-  );
-  const isUniqColorCountIsEqualOne = compose(isEqualOne, getUniqColorCount);
-
-  const isUniqGreatherThreeOrIsOne = anyPass([
-    isUniqColourfulCountGreatherThree,
-    isUniqColorCountIsEqualOne,
-  ]);
-
+ 
+  const isUniqGreatherThreeOrIsOne = compose(isGreatherThenThree, getUniqColorCount)
   return isUniqGreatherThreeOrIsOne(props);
 };
 
