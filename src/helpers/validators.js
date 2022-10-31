@@ -35,6 +35,7 @@ const isOrange = equals("orange");
 const isGreatherThen = curry((goal, target) => target >= goal);
 const isGreatherThenThree = isGreatherThen(3);
 const isGreatherThenTwo = isGreatherThen(2);
+
 const isEqual = curry((a, b) => a === b);
 const isEqualOne = isEqual(1);
 const isEqualTwo = isEqual(2);
@@ -61,6 +62,7 @@ export const validateFieldN1 = ({ star, square, triangle, circle }) =>
 
 // 2. Как минимум две фигуры зеленые.
 export const validateFieldN2 = (props) => {
+  // получения цветов и проверки по условия в отдельную функцию выносить не нашел смысла
   const isGreenColorCountGreatherTwo = compose(
     isGreatherThenTwo,
     getGreenColorCount
@@ -80,6 +82,7 @@ export const validateFieldN4 = ({ star, square, triangle, circle }) =>
 
 // 5. Три фигуры одного любого цвета кроме белого (четыре фигуры одного цвета – это тоже true).
 export const validateFieldN5 = (props) => {
+  // очень специфичные гетеры и предикаты, выносить в модуль не стал
   const getUniqColourfulCount = compose(
     getSize,
     ArrToSet,
