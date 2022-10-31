@@ -101,6 +101,7 @@ export const validateFieldN5 = (props) => {
     isUniqColourfulCountGreatherThree,
     isUniqColorCountIsEqualOne,
   ]);
+
   return isUniqGreatherThreeOrIsOne(props);
 };
 
@@ -116,6 +117,7 @@ export const validateFieldN6 = (props) => {
     isGreenColorCountIsEqualTwo,
     isRedColorCountIsEqualOne,
   ]);
+
   return isRedEqualOneAndGreenEqualTwo(props) && isGreen(props.triangle);
 };
 
@@ -133,6 +135,7 @@ export const validateFieldN7 = (props) => {
 // 8. Не красная и не белая звезда, остальные – любого цвета.
 export const validateFieldN8 = ({ star }) => {
   const isStarNotRedandWhite = allPass([isNotRed, isNotWhite]);
+  
   return isStarNotRedandWhite(star);
 };
 
